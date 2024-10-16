@@ -321,9 +321,49 @@ Next we're going to see how `awk` inspired other famous tools!
 
 awk as an inspiration
 ---
+* `perl` (1987) was inspired from `awk` (1977) as well as other languages
+> Perl borrows features from other programming languages 
+> including C, sh, AWK, and sed.[1]
 
-TODO
+> Perl takes hashes ("associative arrays") from AWK and 
+> regular expressions from sed.
+<!-- pause -->
 
+* and since `python` (1991) was inspired by `perl`
+> Many professional programmers are turning to Python, 
+> often as an alternative to Perl, or other scripting languages. 
+
+> Like Perl, Python is excellent for scripting, 
+> and string manipulation, yet its syntax is much less cryptic. [2]
+
+
+<!-- pause -->
+People have made family trees of programming languages!
+
+References
+1. https://history.perl.org/PerlTimeline.html
+2. https://www.cs.ubc.ca/wccce/Program03/papers/Toby.html
+
+<!-- end_slide -->
+
+Programming language family tree
+---
+```
+      COBOL(1959)  Fortran(1957)                      Lisp(1958)
+                      |                                  |
+           ╭----------┴---╮                              |
+      ALGOL(1960)   BASIC(1964)                ╭---------|
+           |                                   |         |
+           ╰---╮----------╮                    |         |
+          C(1972)  Pascal(1970)     AWK(1977)  | Smalltalk(1972)
+           |                           ╰-╮     |
+           ╰--╮----------╮------╮------╮ | ╭---|
+Objective-C(1986)     C++(1980) |  Perl(1987)  |
+                         |      |        |     |
+        ╭----------------┴--╮   ╰---╮    | ╭---╯
+ JavaScript(1995)    Java(1995)  Python(1990)
+```
+(Stolen from https://tecky.io/en/blog/evolution-of-programming-languages/)
 
 <!-- pause -->
 Let's do some more `awk`! This time on common genomics files!
@@ -371,7 +411,7 @@ sum(dat['end']-dat['start'])
 
 Understanding the running sum of .bed region spans
 ---
-Can anyone walk through how this script is working?
+How is this script is working?
 ```bash
 #chr start end
 chr1 100 120
@@ -401,7 +441,12 @@ chr2 560 580
 ```
 <!-- end_slide -->
 
-GTF TODO SLIDE
+ASSOC ARRAYS Vernot 2016 TODO SLIDE
+---
+Need to add info here now
+<!-- end_slide -->
+
+GTF TODO SLIDE (SHOW SPLIT LINES)
 ---
 Need to add info here now
 <!-- end_slide -->
@@ -411,23 +456,70 @@ CONCAT FILES IDENTICAL HEADERS TODO SLIDE
 Need to add info here now
 <!-- end_slide -->
 
-SPLIT LINES INTO DIFFERENT FILES TODO SLIDE
+When not to use `awk`
 ---
-Need to add info here now
+* `awk` is best used for relatively simple scripts
+<!-- new_line -->
+* If your awk script starts getting to be large and ugly 
+then maybe it's time to switch to R or python
+<!-- new_line -->
+* `awk` is great as "glue" between command line tools or scripts
+and can feel a bit "unprofessional"
+<!-- pause -->
+Having said that, even Heng Li suggests using `awk` to processing `hifiasm` output!
+
+Here's an entry in the `hifiasm` FAQ
+
+> How do I get contigs in FASTA?
+
+The FASTA file can be produced from GFA as follows:
+```bash
+awk '/^S/{print ">"$2;print $3}' test.p_ctg.gfa > test.p_ctg.fa
+```
+
+<!-- pause -->
+Does anybody want to guess what it's doing?
+
+Here's a few rows of a `.gfa` file:
+```
+S  ptg000001l  TCCTGGTGAGGC...  ...
+A  ptg000001l  0                ...
+A  ptg000001l  271              ...
+A  ptg000001l  1642             ...
+...
+```
+
 <!-- end_slide -->
 
-ASSOC ARRAYS Vernot 2016 TODO SLIDE
+Heng Li's use of `awk` in `hifiasm`
 ---
-Need to add info here now
+> How do I get contigs in FASTA?
+
+The FASTA file can be produced from GFA as follows:
+```bash
+awk '/^S/{print ">"$2;print $3}' test.p_ctg.gfa > test.p_ctg.fa
+```
+
+Does anybody want to guess what it's doing?
+
+Here's a few rows of a `.gfa` file:
+```
+S  ptg000001l  TCCTGGTGAGGC...  ...
+A  ptg000001l  0                ...
+A  ptg000001l  271              ...
+A  ptg000001l  1642             ...
+...
+```
+
+Output would be:
+```
+>ptg000001l
+TCCTGGTGAGGC...
+```
+
+skipping all the rows that start with "A" until the next "S" row.
+
 <!-- end_slide -->
-
-
-WHEN NOT TO USE AWK TODO SLIDE
----
-Need to add info here now
-<!-- end_slide -->
-
-
 SUMMARY AND FURTHER RESOURCES TODO SLIDE
 ---
 Need to add info here now
