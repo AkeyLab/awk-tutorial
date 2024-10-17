@@ -631,7 +631,7 @@ but then we'd get the header multiple times, and internally.
 Instead we can use an `awk` trick
 
 ```
-awk 'NR > 1 || NR == FNR { print }' data/f*.tsv > all.tsv
+awk 'FNR > 1 || NR == FNR { print }' data/f*.tsv > all.tsv
 ```
 
 This relies on `awk`'s `NR` and `FNR` variables.
@@ -707,14 +707,22 @@ Then it prints the 2nd column, newline, then the 3rd column.
 Summary and further resources
 ---
 Here's what we spoke about today:
-# We'll start with an awk **amuse-bouche**
+# We started with an awk **amuse-bouche**
+<!-- pause -->
 # History of the `awk` language
+<!-- pause -->
 # Learn how `awk` works with a "quota" dataset
+<!-- pause -->
 # `awk` as the inspiration for perl, python, and more
+<!-- pause -->
 # The power of `awk` on .bed and .gtf files
+<!-- pause -->
 # Using `awk`'s associative arrays
+<!-- pause -->
 # Two nice `awk` "tricks" for multiple files
+<!-- pause -->
 # When to probably not use `awk`
+<!-- pause -->
 
 If `awk` is something you want to commit to learning more of,
 then I'd suggest working with chatGPT.
