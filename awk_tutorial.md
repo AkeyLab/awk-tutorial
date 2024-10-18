@@ -18,7 +18,7 @@ Goals for this presentation
 <!-- pause -->
 # Learn how `awk` works with a "quota" dataset
 <!-- pause -->
-# `awk` as the inspiration for perl, python, and more
+# `awk` as an inspiration for perl, python, and more
 <!-- pause -->
 # The power of `awk` on .bed and .gtf files
 <!-- pause -->
@@ -60,6 +60,39 @@ limingli
 
 <!-- pause -->
 (In this case, we could have also used `cut -f3 data/quotas.tsv`)
+
+<!-- end_slide -->
+
+Comparable python code for `awk '{ print $3 }' data/quotas.tsv`
+---
+
+We saw how to print the 3rd column of the `data/quotas.tsv` file in `awk`
+```
+projects  scratch   User
+ 136.800    0.000   tcomi
+  62.000   10.100   rb3242
+   0.000   42.600   limingli
+...
+```
+
+```bash
+awk '{ print $3 }' data/quotas.tsv
+```
+
+<!-- pause -->
+Here is how we might accomplish the same thing with python:
+
+```python
+with open("data/quotas.tsv") as f_in:
+    for line in f_in:
+        split_line = line.split("\t")
+        print(split_line[2]) #indexed at 0
+```
+
+<!-- pause -->
+Everything that `awk` can do can be done in a more *readable* way in a "real" programming language.
+
+There's a joke that `awk` is "write-only" because it can be so hard to read (there's a similar `perl` joke...)
 
 <!-- end_slide -->
 
@@ -332,6 +365,25 @@ awk as an inspiration
 > Like Perl, Python is excellent for scripting, 
 > and string manipulation, yet its syntax is much less cryptic. [2]
 
+<!-- pause -->
+Here's an example of a `perl` script that renames files from `sample.1` to `sample.001` etc
+```perl
+$old = $ARGV[0];
+$new = $ARGV[1];
+$start = $ARGV[2];
+$stop = $ARGV[3];
+
+for ($i=$start; $i <= $stop; $i++) {
+
+    $num = $i;
+    if($i<10) { $num = "00$i"; }
+    elsif($i<100) { $num = "0$i"; }
+
+    $cmd = "mv $old.$num $new.$num";
+    print $cmd."\n";
+    if(system($cmd)) { print "rename failed\n"; }
+}
+```
 
 <!-- pause -->
 People have made family trees of programming languages!
